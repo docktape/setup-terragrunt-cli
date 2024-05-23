@@ -1,11 +1,10 @@
 import * as core from '@actions/core'
-import { setup } from './setup-terragrunt';
+import { setup } from './setup-terragrunt'
 
-
-(async () => {
+;(async () => {
   try {
-    await setup();
+    await setup()
   } catch (error: any) {
-    core.setFailed(error.message);
+    core.setFailed(error.message)
   }
-})();
+})()
