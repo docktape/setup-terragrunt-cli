@@ -1,23 +1,16 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'setup-terragrunt'
+description: 'Setup Terragrunt CLI for GitHub Actions'
+author: 'Docktape Ltd.'
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
   icon: 'heart'
   color: 'red'
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
-    required: true
-    default: '1000'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+  version:
+    description: 'The version of Terragrunt CLI to install. Defaults to v0.58.9'
+    default: v0.58.9
+    required: false
 
 runs:
   using: node20

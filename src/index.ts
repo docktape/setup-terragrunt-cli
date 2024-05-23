@@ -1,7 +1,11 @@
-/**
- * The entrypoint for the action.
- */
-import { run } from './main'
+import * as core from '@actions/core'
+import { setup } from './setup-terragrunt';
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-run()
+
+(async () => {
+  try {
+    await setup();
+  } catch (error: any) {
+    core.setFailed(error.message);
+  }
+})();
