@@ -28853,65 +28853,62 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.setup = void 0;
 const core = __importStar(__nccwpck_require__(2186));
-const os_1 = __importDefault(__nccwpck_require__(2037));
-const exec_1 = __importDefault(__nccwpck_require__(1514));
-const tool_cache_1 = __importDefault(__nccwpck_require__(7784));
+const os = __importStar(__nccwpck_require__(2037));
+const exec = __importStar(__nccwpck_require__(1514));
+const tc = __importStar(__nccwpck_require__(7784));
 const mapArch = (arch) => {
     const mappings = {
         x32: '386',
         x64: 'amd64',
         arm: 'arm64',
-        arm64: 'arm64'
+        arm64: 'arm64',
     };
     return mappings[arch];
 };
-const mapOS = (os) => {
+const mapOS = (osPlatform) => {
     const mappings = {
         darwin: 'darwin',
         win32: 'windows',
-        linux: 'linux'
+        linux: 'linux',
     };
-    return mappings[os];
+    return mappings[osPlatform];
 };
 const downloadCLI = async (version, platform, arch) => {
     core.debug(`Downloading Terragrunt CLI for ${version}, ${platform}, ${arch}`);
     const fileSuffix = platform === 'windows' ? '.exe' : '';
     const url = `https://github.com/gruntwork-io/terragrunt/releases/download/${version}/terragrunt_${platform}_${arch}${fileSuffix}`;
     core.debug(`Downloading Terragrunt CLI from ${url}`);
-    const pathToCLI = await tool_cache_1.default.downloadTool(url);
+    const pathToCLI = await tc.downloadTool(url);
     core.debug(`Terragrunt CLI path is ${pathToCLI}.`);
     if (!pathToCLI) {
         throw new Error(`Unable to download Terragrunt from ${url}`);
     }
     core.debug(`Making Terragrunt binary executable`);
-    await exec_1.default.exec('chmod', ['+x', pathToCLI]);
+    await exec.exec('chmod', ['+x', pathToCLI]);
     return pathToCLI;
 };
 const isTerragruntCached = (version) => {
-    const toolPath = tool_cache_1.default.find('terragrunt', version);
-    return toolPath != undefined && toolPath !== '';
+    const toolPath = tc.find('terragrunt', version);
+    return toolPath !== undefined && toolPath !== '';
 };
 const setup = async () => {
     try {
         const version = core.getInput('version');
-        const osPlatform = os_1.default.platform();
-        const osArch = os_1.default.arch();
+        const osPlatform = os.platform();
+        const osArch = os.arch();
         core.debug(`Finding releases for Terragrunt version ${version}`);
         const platform = mapOS(osPlatform);
         const arch = mapArch(osArch);
         let toolPath;
         if (!isTerragruntCached(version)) {
             const pathToCLI = await downloadCLI(version, platform, arch);
-            toolPath = await tool_cache_1.default.cacheFile(pathToCLI, 'terragrunt', 'Terragrunt', version);
+            toolPath = await tc.cacheFile(pathToCLI, 'terragrunt', 'Terragrunt', version);
         }
         else {
-            toolPath = tool_cache_1.default.find('terragrunt', version);
+            toolPath = tc.find('terragrunt', version);
         }
         core.addPath(toolPath);
     }

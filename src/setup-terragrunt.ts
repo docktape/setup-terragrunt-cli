@@ -1,28 +1,32 @@
 import * as core from '@actions/core'
-import os from 'os'
-import exec from '@actions/exec'
-import tc from '@actions/tool-cache'
+import * as os from 'os'
+import * as exec from '@actions/exec'
+import * as tc from '@actions/tool-cache'
 
-const mapArch = (arch: string) => {
+const mapArch = (arch: string): string => {
   const mappings = {
     x32: '386',
     x64: 'amd64',
     arm: 'arm64',
-    arm64: 'arm64'
+    arm64: 'arm64',
   }
   return mappings[arch as keyof typeof mappings]
 }
 
-const mapOS = (os: string) => {
+const mapOS = (osPlatform: string): string => {
   const mappings = {
     darwin: 'darwin',
     win32: 'windows',
-    linux: 'linux'
+    linux: 'linux',
   }
-  return mappings[os as keyof typeof mappings]
+  return mappings[osPlatform as keyof typeof mappings]
 }
 
-const downloadCLI = async (version: string, platform: string, arch: string) => {
+const downloadCLI = async (
+  version: string,
+  platform: string,
+  arch: string,
+): Promise<string> => {
   core.debug(`Downloading Terragrunt CLI for ${version}, ${platform}, ${arch}`)
   const fileSuffix = platform === 'windows' ? '.exe' : ''
   const url = `https://github.com/gruntwork-io/terragrunt/releases/download/${version}/terragrunt_${platform}_${arch}${fileSuffix}`
@@ -42,9 +46,9 @@ const downloadCLI = async (version: string, platform: string, arch: string) => {
   return pathToCLI
 }
 
-const isTerragruntCached = (version: string) => {
+const isTerragruntCached = (version: string): boolean => {
   const toolPath = tc.find('terragrunt', version)
-  return toolPath != undefined && toolPath !== ''
+  return toolPath !== undefined && toolPath !== ''
 }
 
 export const setup = async (): Promise<void> => {
@@ -65,7 +69,7 @@ export const setup = async (): Promise<void> => {
         pathToCLI,
         'terragrunt',
         'Terragrunt',
-        version
+        version,
       )
     } else {
       toolPath = tc.find('terragrunt', version)

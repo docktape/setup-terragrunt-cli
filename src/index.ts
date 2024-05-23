@@ -1,6 +1,5 @@
 import * as core from '@actions/core'
 import { setup } from './setup-terragrunt'
-
 ;(async () => {
   try {
     await setup()
