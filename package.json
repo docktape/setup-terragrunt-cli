@@ -1,21 +1,22 @@
 {
-  "name": "typescript-action",
-  "description": "GitHub Actions TypeScript template",
-  "version": "0.0.0",
+  "name": "setup-terragrunt",
+  "description": "Setup Terragrunt CLI for GitHub Actions",
+  "version": "1.0.0",
   "author": "",
   "private": true,
-  "homepage": "https://github.com/actions/typescript-action",
+  "homepage": "https://github.com/docktape/setup-terragrunt",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/docktape/setup-terragrunt.git"
   },
   "bugs": {
-    "url": "https://github.com/actions/typescript-action/issues"
+    "url": "https://github.com/docktape/setup-terragrunt/issues"
   },
   "keywords": [
     "actions",
-    "node",
-    "setup"
+    "setup",
+    "terragrunt",
+    "terraform"
   ],
   "exports": {
     ".": "./dist/index.js"
@@ -35,7 +36,7 @@
     "test": "npx jest",
     "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "jest": {
     "preset": "ts-jest",
     "verbose": true,
