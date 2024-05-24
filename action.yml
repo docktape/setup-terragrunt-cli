@@ -1,10 +1,10 @@
-name: 'setup-terragrunt'
+name: 'setup-terragrunt-cli'
 description: 'Setup Terragrunt CLI for GitHub Actions'
 author: 'Docktape Ltd.'
 
 branding:
-  icon: 'heart'
-  color: 'red'
+  icon: 'terminal'
+  color: 'purple'
 
 inputs:
   version:

@@ -12,27 +12,46 @@ permissions:
   contents: read
 
 jobs:
-  simple-setup-terragrunt:
-    name: GitHub Actions Test
+  default-setup-terragrunt-cli:
+    name: Default setup-terragrunt-cli
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Terraform CLI
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
 
       - name: Setup Terragrunt
         uses: ./
 
       - name: Terragrunt version
-        run: terragrunt -version
+        run: |
+          #!/bin/bash
+          desired_version="v0.58.9"
+          version_output=$(terragrunt -version 2>&1)
+          if [[ $version_output == *"$desired_version"* ]]; then
+            echo "Terragrunt version check succeeded."
+          else
+            echo "Terragrunt version check failed. Expected version: $desired_version but was: $version_output"
+            exit 1
+          fi
 
-  version-setup-terragrunt:
-    name: GitHub Actions Test
+  version-setup-terragrunt-cli:
+    name: Version configured setup-terragrunt-cli
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Terraform CLI
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
 
       - name: Setup Terragrunt
         uses: ./
@@ -40,4 +59,13 @@ jobs:
           version: v0.58.8
 
       - name: Terragrunt version
-        run: terragrunt -version
+        run: |
+          #!/bin/bash
+          desired_version="v0.58.8"
+          version_output=$(terragrunt -version 2>&1)
+          if [[ $version_output == *"$desired_version"* ]]; then
+            echo "Terragrunt version check succeeded."
+          else
+            echo "Terragrunt version check failed. Expected version: $desired_version but was: $version_output"
+            exit 1
+          fi
