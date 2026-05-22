@@ -1,6 +1,8 @@
 # setup-terragrunt-cli
 
-A GitHub Actions composite action that installs a specific version of the Terragrunt CLI into a GitHub Actions runner. Published as `docktape/setup-terragrunt-cli`. Default Terragrunt version: `v0.58.9`.
+A GitHub Actions composite action that installs a specific version of
+the Terragrunt CLI into a GitHub Actions runner. Published as
+`docktape/setup-terragrunt-cli`. Default Terragrunt version: `v0.58.9`.
 
 ## Tech Stack
 
@@ -42,14 +44,22 @@ npm run all
 ## Project Structure
 
 - `src/index.ts` - Action entry point
-- `src/setup-terragrunt.ts` - Core logic: downloads Terragrunt binary, caches it, adds to PATH
-- `dist/index.js` - Compiled bundle (committed to repo, used at action runtime)
-- `action.yml` - Action metadata: input `version` (default `v0.58.9`), uses `node20`
+- `src/setup-terragrunt.ts` - Core logic: downloads Terragrunt binary,
+  caches it, adds to PATH
+- `dist/index.js` - Compiled bundle (committed to repository, used at
+  action runtime)
+- `action.yml` - Action metadata: input `version` (default `v0.58.9`),
+  uses `node20`
 - `script/release` - Release helper script
 - `.github/workflows/` - CI, dist check, linter, CodeQL workflows
 
 ## Key Notes
 
-- The `dist/` directory must be committed after every source change — run `npm run package` to regenerate, then commit `dist/index.js` and `dist/index.js.map`
-- Terraform CLI must be installed separately (e.g., `hashicorp/setup-terraform@v3` with `terraform_wrapper: false`) before using this action
-- Supports `ubuntu-latest`, `windows-latest`, and `macos-latest`; on Windows, the shell must be set to Bash
+- The `dist/` directory must be committed after every source change -
+  run `npm run package` to regenerate, then commit `dist/index.js` and
+  `dist/index.js.map`
+- Terraform CLI must be installed separately (e.g.,
+  `hashicorp/setup-terraform@v3` with `terraform_wrapper: false`) before
+  using this action
+- Supports `ubuntu-latest`, `windows-latest`, and `macos-latest`; on
+  Windows, the shell must be set to Bash
