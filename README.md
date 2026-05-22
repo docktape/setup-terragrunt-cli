@@ -20,7 +20,7 @@ GitHub Actions runners.
 
 When running on `windows-latest` the shell should be set to Bash.
 
-When running on self-hosted GitHub Actions runners, NodeJS must be installed
+When running on self-hosted GitHub Actions runners, Node.js must be installed
 with the version specified in the
 [`action.yml`](https://github.com/docktape/setup-terragrunt/blob/master/action.yml).
 

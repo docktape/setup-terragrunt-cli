@@ -39,7 +39,10 @@ jobs:
 
       - name: Install Dependencies
         id: install
-        run: npm ci
+        # Run npm ci via npx so min-release-age is enforced by npm 11.10+
+        # without a global install (global npm install is flaky on GH runners
+        # due to a toolcache npm self-upgrade bug).
+        run: npx --yes npm@^11.10.0 ci
 
       - name: Build dist/ Directory
         id: build
