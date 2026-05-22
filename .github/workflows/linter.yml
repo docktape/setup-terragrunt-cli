@@ -32,12 +32,12 @@ jobs:
           node-version-file: .node-version
           cache: npm
 
-      - name: Upgrade npm
-        run: npm install -g npm@^11.10.0
-
       - name: Install Dependencies
         id: install
-        run: npm ci
+        # Run npm ci via npx so min-release-age is enforced by npm 11.10+
+        # without a global install (global npm install is flaky on GH runners
+        # due to a toolcache npm self-upgrade bug).
+        run: npx --yes npm@^11.10.0 ci
 
       - name: Lint Codebase
         id: super-linter
